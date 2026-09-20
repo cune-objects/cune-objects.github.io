@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CUNE — Coming soon</title>
+<meta name="description" content="CUNE turns everyday essentials into objects of desire through thoughtful, minimalist design.">
+<meta name="theme-color" content="#F0F1EF">
+<meta name="robots" content="index,follow">
+<style>
+:root{--navy:#101E36;--grey:#F0F1EF;--muted:#7B8188;--line:rgba(16,30,54,.14);--light:rgba(240,241,239,.72);--ease:cubic-bezier(.22,.61,.36,1);--max:1240px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--grey)}
+body{margin:0;color:var(--navy);background:var(--grey);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none} button{font:inherit;color:inherit}
+.header{position:absolute;z-index:20;inset:0 0 auto 0;height:86px;padding:0 38px;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.mini-logo,.menu-button{pointer-events:auto}.mini-logo{font-size:13px;font-weight:650;letter-spacing:.28em;text-transform:uppercase}
+.menu-button{width:48px;height:30px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:7px}
+.menu-button span{display:block;height:1.5px;background:currentColor}.menu-button span:first-child{width:48px}.menu-button span:last-child{width:31px}
+.menu-overlay{position:fixed;z-index:100;inset:0;background:var(--navy);color:var(--grey);visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s}
+
+.menu-inner{width:min(100%,var(--max));height:100%;margin:0 auto;padding:120px 38px 54px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.menu-close{position:absolute;top:25px;right:38px;font-size:34px;font-weight:200;line-height:1}
+.menu-kicker{margin:0 0 34px;color:rgba(240,241,239,.5);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.menu-nav{display:flex;flex-direction:column;align-items:flex-start}.menu-nav a{font-size:clamp(48px,7vw,88px);line-height:1;font-weight:400;letter-spacing:-.05em;padding:3px 0}
+.section-inner{width:min(100%,var(--max));margin:0 auto;padding-left:38px;padding-right:38px}.section-label{margin:0;font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.55}
+.hero{min-height:100svh;position:relative;display:grid;place-items:center;background:var(--grey)}
+.hero-center{width:100%;text-align:center;padding:110px 24px 86px}.hero-logo{margin:0;font-size:clamp(104px,20vw,286px);line-height:.72;font-weight:500;letter-spacing:-.075em;text-transform:lowercase}
+.coming-soon{margin-top:48px;color:var(--muted);font-size:10px;letter-spacing:.20em;text-transform:uppercase}
+.hero-line{position:absolute;left:38px;right:38px;bottom:34px;height:1px;background:var(--line)}
+.about{min-height:92svh;display:flex;align-items:center;background:var(--navy);color:var(--grey)}.about .section-inner{padding-top:120px;padding-bottom:120px}
+.about-grid,.contact-grid{display:grid;grid-template-columns:minmax(120px,.55fr) 2.45fr;gap:7vw;align-items:start}
+.statement{margin:0;max-width:980px;line-height:1.02;font-weight:400;letter-spacing:-.045em}.statement-main{display:block;font-size:clamp(48px,6.8vw,92px);color:var(--grey)}.statement .soft{display:block;margin-top:28px;font-size:clamp(24px,3.2vw,44px);line-height:1.12;color:rgba(240,241,239,.52);letter-spacing:-.03em}
+.about-details{width:min(700px,100%);margin:62px 0 0 auto;padding-top:24px;border-top:1px solid rgba(240,241,239,.18);display:grid;grid-template-columns:1fr 1fr;gap:42px}
+.about-details p{margin:0;color:var(--light);font-size:15px;line-height:1.65}.about-details strong{color:var(--grey);font-weight:400}
+.contact{min-height:68svh;display:flex;align-items:center;background:var(--grey)}.contact .section-inner{padding-top:120px;padding-bottom:120px}
+.contact h2{margin:0;font-size:clamp(52px,7vw,104px);line-height:.92;font-weight:400;letter-spacing:-.055em}.contact p{margin:28px 0 0;max-width:580px;color:var(--muted);font-size:16px;line-height:1.6}
+.email-link{display:inline-block;position:relative;margin-top:44px;font-size:clamp(34px,5.6vw,76px);letter-spacing:-.04em}.email-link::after{content:"";position:absolute;left:0;bottom:-7px;width:100%;height:1px;background:currentColor}
+.footer{background:var(--grey);border-top:1px solid var(--line)}.footer .section-inner{padding-top:12px;padding-bottom:14px}
+.footer-row{display:flex;align-items:center;justify-content:space-between;gap:18px}.copyright,.legal-actions summary{color:var(--muted);font-size:9px;letter-spacing:.11em;text-transform:uppercase}
+.legal-actions{display:flex;align-items:center;gap:18px}details summary{list-style:none;cursor:pointer;user-select:none}details summary::-webkit-details-marker{display:none}.legal-details[open] summary{color:var(--navy)}
+.footer-expanded{display:flex;justify-content:flex-end}.legal-panel{width:min(760px,calc(100vw - 76px));padding:22px 0 8px;animation:reveal .32s var(--ease) both}
+@keyframes reveal{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+.legal-item{display:grid;grid-template-columns:150px 1fr;gap:26px;padding:13px 0;border-top:1px solid rgba(16,30,54,.09)}
+.legal-item h3{margin:2px 0 0;font-size:9px;font-weight:500;line-height:1.4;text-transform:uppercase;letter-spacing:.10em}.legal-item p{margin:0;color:var(--muted);font-size:12px;line-height:1.62}
+@media(max-width:760px){
+.header{height:72px;padding:0 20px}.mini-logo{font-size:12px}.menu-button{width:42px}.menu-button span:first-child{width:42px}.menu-button span:last-child{width:28px}
+.menu-inner{padding:100px 20px 40px}.menu-close{top:18px;right:20px}.section-inner{padding-left:20px;padding-right:20px}.hero-logo{font-size:clamp(88px,29vw,150px)}.coming-soon{margin-top:34px}.hero-line{left:20px;right:20px;bottom:24px}
+.about .section-inner,.contact .section-inner{padding-top:92px;padding-bottom:92px}.about-grid,.contact-grid{grid-template-columns:1fr;gap:34px}.statement-main{font-size:clamp(42px,12.5vw,64px)}.statement .soft{font-size:clamp(22px,6vw,30px);margin-top:22px}
+.about-details{margin-top:48px;grid-template-columns:1fr;gap:20px}.legal-actions{gap:14px}.legal-panel{width:calc(100vw - 40px)}.legal-item{grid-template-columns:1fr;gap:6px}.footer-expanded{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+/* V17 — robust three-bar slideout menu */
+.menu-toggle{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.hamburger{
+  width:46px;
+  height:34px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-end;
+  gap:6px;
+  cursor:pointer;
+  pointer-events:auto;
+  z-index:30;
+}
+
+.hamburger span{
+  display:block;
+  height:1.5px;
+  background:var(--navy);
+  transition:width .24s ease, transform .24s ease, opacity .24s ease;
+}
+
+.hamburger span:nth-child(1){width:46px}
+.hamburger span:nth-child(2){width:36px}
+.hamburger span:nth-child(3){width:26px}
+
+.hamburger:hover span{width:46px}
+
+.menu-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:90;
+  background:rgba(16,30,54,.18);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .35s ease, visibility .35s ease;
+  cursor:pointer;
+}
+
+.slideout-menu{
+  position:fixed;
+  z-index:100;
+  top:0;
+  right:0;
+  width:min(520px,88vw);
+  height:100svh;
+  background:var(--navy);
+  color:var(--grey);
+  transform:translateX(100%);
+  transition:transform .46s cubic-bezier(.22,.61,.36,1);
+  box-shadow:-20px 0 60px rgba(0,0,0,.08);
+}
+
+.slideout-inner{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  padding:28px 34px 46px;
+}
+
+.slideout-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.slideout-wordmark{
+  font-size:12px;
+  font-weight:650;
+  letter-spacing:.28em;
+}
+
+.menu-close-x{
+  cursor:pointer;
+  font-size:36px;
+  font-weight:200;
+  line-height:1;
+  color:var(--grey);
+  opacity:.9;
+}
+
+.slideout-nav{
+  margin-top:auto;
+  margin-bottom:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+}
+
+.slideout-nav a{
+  position:relative;
+  font-size:clamp(52px,7vw,86px);
+  line-height:.98;
+  font-weight:400;
+  letter-spacing:-.05em;
+  color:var(--grey);
+}
+
+.slideout-nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:1px;
+  background:currentColor;
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform .32s ease;
+}
+
+.slideout-nav a:hover::after{
+  transform:scaleX(1);
+  transform-origin:left;
+}
+
+.menu-toggle:checked ~ .menu-backdrop{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.menu-toggle:checked ~ .slideout-menu{
+  transform:translateX(0);
+}
+
+.menu-toggle:checked ~ .header .hamburger span:nth-child(1){
+  transform:translateY(7.5px) rotate(45deg);
+  width:38px;
+}
+.menu-toggle:checked ~ .header .hamburger span:nth-child(2){
+  opacity:0;
+}
+.menu-toggle:checked ~ .header .hamburger span:nth-child(3){
+  transform:translateY(-7.5px) rotate(-45deg);
+  width:38px;
+}
+
+@media(max-width:760px){
+  .hamburger{width:42px}
+  .hamburger span:nth-child(1){width:42px}
+  .hamburger span:nth-child(2){width:33px}
+  .hamburger span:nth-child(3){width:24px}
+  .slideout-menu{width:92vw}
+  .slideout-inner{padding:22px 22px 38px}
+  .slideout-nav a{font-size:clamp(50px,16vw,74px)}
+}
+
+
+/* V18 — About secondary line */
+.statement .soft{
+  display:block;
+  margin-top:24px;
+  font-size:clamp(18px,1.8vw,24px);
+  line-height:1.15;
+  letter-spacing:-.018em;
+  white-space:nowrap;
+}
+@media(max-width:980px){
+  .statement .soft{
+    white-space:normal;
+    font-size:clamp(19px,3.6vw,25px);
+  }
+}
+
+</style>
+
+<style>
+.footer-row{align-items:flex-start}
+.legal-actions{position:relative}
+.legal-details{position:static}
+.legal-details .legal-panel{
+  position:absolute;
+  right:0;
+  top:24px;
+  background:var(--grey);
+  z-index:5;
+}
+.legal-details[open] .legal-panel{display:block}
+@media(max-width:760px){
+  .legal-details .legal-panel{
+    position:absolute;
+    right:0;
+    top:24px;
+  }
+}
+</style>
+
+</head>
+<body>
+<input class="menu-toggle" type="checkbox" id="menuToggle" aria-hidden="true">
+
+<header class="header">
+  <a class="mini-logo" href="#home" aria-label="CUNE home">CUNE</a>
+
+  <label class="hamburger" for="menuToggle" aria-label="Open navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+</header>
+
+<label class="menu-backdrop" for="menuToggle" aria-hidden="true"></label>
+
+<aside class="slideout-menu" aria-label="Navigation">
+  <div class="slideout-inner">
+    <div class="slideout-top">
+      <span class="slideout-wordmark">CUNE</span>
+      <label class="menu-close-x" for="menuToggle" aria-label="Close navigation">×</label>
+    </div>
+
+    <nav class="slideout-nav">
+      <a href="#home" data-menu-link>Home</a>
+      <a href="#about" data-menu-link>About</a>
+      <a href="#contact" data-menu-link>Contact</a>
+    </nav>
+  </div>
+</aside>
+
+<main>
+<section class="hero" id="home">
+<div class="hero-center">
+<h1 class="hero-logo">cune</h1>
+<div class="coming-soon">Coming soon</div>
+</div>
+<div class="hero-line"></div>
+</section>
+
+<section class="about" id="about">
+<div class="section-inner">
+<div class="about-grid">
+<p class="section-label">About CUNE</p>
+<div>
+<p class="statement"><span class="statement-main">We turn everyday essentials into objects of desire.</span><span class="soft">Thoughtfully designed to elevate the routines of everyday life.</span></p>
+<div class="about-details">
+<p>CUNE brings <strong>considered design</strong> to the products we use every day. We believe function and aesthetics should never be separate.</p>
+<p>Driven by <strong>innovation</strong> and a distinctly <strong>minimalist mindset</strong>, we challenge the familiar and make the ordinary feel exceptional.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="contact" id="contact">
+<div class="section-inner">
+<div class="contact-grid">
+<p class="section-label">Contact</p>
+<div>
+<h2>Get in touch.</h2>
+<p>Questions, ideas or simply curious about CUNE? We would love to hear from you.</p>
+<a class="email-link" href="mailto:hello@cune-objects.com">hello@cune-objects.com</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="footer">
+<div class="section-inner">
+<div class="footer-row">
+<span class="copyright">© 2026 CUNE</span>
+
+<div class="legal-actions">
+<details class="legal-details">
+<summary>Imprint</summary>
+<div class="legal-panel">
+<div class="legal-item">
+<h3>Provider</h3>
+<p>
+CUNE / Laurent Fischer<br>
+Alte Kollaustraße 30<br>
+22529 Hamburg<br>
+Germany
+</p>
+</div>
+<div class="legal-item">
+<h3>Contact</h3>
+<p><a href="mailto:hello@cune-objects.com">hello@cune-objects.com</a></p>
+</div>
+</div>
+</details>
+
+<details class="legal-details">
+<summary>Privacy</summary>
+<div class="legal-panel">
+<div class="legal-item">
+<h3>Controller</h3>
+<p>
+Laurent Fischer<br>
+Alte Kollaustraße 30<br>
+22529 Hamburg<br>
+Germany<br>
+<a href="mailto:hello@cune-objects.com">hello@cune-objects.com</a>
+</p>
+</div>
+
+<div class="legal-item">
+<h3>Website hosting</h3>
+<p>
+For the technical delivery and security of this website, the hosting provider processes
+technical access data such as IP address, date and time, requested file and browser information.
+The processing is necessary to provide and protect the website and is based on Art. 6(1)(f) GDPR.
+Access data are deleted in accordance with the hosting provider's applicable retention periods.
+</p>
+</div>
+
+<div class="legal-item">
+<h3>Email contact</h3>
+<p>
+If you contact us by email, we process the information you provide in order to respond to your enquiry.
+Depending on the nature of the enquiry, processing is based on Art. 6(1)(b) GDPR or Art. 6(1)(f) GDPR.
+Data are deleted when the enquiry has been conclusively dealt with, unless statutory retention obligations apply.
+</p>
+</div>
+
+<div class="legal-item">
+<h3>Cookies & analytics</h3>
+<p>
+This website itself does not use non-essential cookies, advertising tracking, newsletter registration
+or a contact form. If the final hosting provider adds analytics, cookies or other processing,
+this privacy information must be updated before launch.
+</p>
+</div>
+
+<div class="legal-item">
+<h3>Your rights</h3>
+<p>
+Subject to the applicable legal requirements, you have rights of access, rectification, erasure,
+restriction of processing, objection and data portability. You also have the right to lodge a complaint
+with the competent data protection supervisory authority.
+</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const menuToggle = document.getElementById('menuToggle');
+
+  document.querySelectorAll('.slideout-nav a[data-menu-link]').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      const selector = link.getAttribute('href');
+      const target = document.querySelector(selector);
+
+      if (menuToggle) {
+        menuToggle.checked = false;
+      }
+
+      if (target) {
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', selector);
+        }, 100);
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
